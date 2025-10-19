@@ -1,7 +1,219 @@
+/* Background shape */
 .shape {
-  height: 0;
-  width: 0;
-  border-bottom: 30px solid black;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
+  position: absolute;
+  inset: -30% -15% auto -15%;
+  width: 130%;
+  height: 420px;
+  background: radial-gradient(650px 300px at 10% 10%, rgba(255, 218, 233, 0.28), transparent 14%),
+              radial-gradient(500px 200px at 90% 80%, rgba(255, 240, 245, 0.18), transparent 15%);
+  filter: blur(36px);
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 40%;
+}
+
+/* Página: fondo ligeramente más rosado */
+.pageBg {
+  background: linear-gradient(180deg, #fff3f6 0%, #fff6fa 50%, #fffafc 100%);
+}
+
+/* Left panel / hero card */
+.left-panel { z-index: 10; }
+.heroCard {
+  background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(255,250,250,0.95));
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(16,24,40,0.06);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Typography and colors */
+.welcomeTitle {
+  color: #8b2350; /* deep pastel magenta */
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  will-change: opacity, transform;
+  line-height: 1.05;
+  text-align: center;
+}
+.welcomeTitle.fade-out {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+.welcomeText { color: #a85b76; /* softer rose */ }
+
+/* Slogan under title */
+.slogan {
+  color: #c75b77; /* softer pink */
+  font-size: 0.95rem;
+  font-weight: 600;
+  opacity: 0.98;
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+/* Button primary */
+.btnPink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #ffdce6, #ffcfe0);
+  color: #5b1140;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btnPink:focus-visible { outline: 3px solid rgba(139,35,80,0.14); outline-offset: 3px; }
+
+/* Secondary link style */
+.secondaryLink {
+  padding: 0.45rem 0.9rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.6);
+  color: #b24f6a;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Dashboard button style */
+.btnDashboard {
+  padding: 0.45rem 0.95rem;
+  border-radius: 10px;
+  background: linear-gradient(90deg,#ff6f96,#ff4e7a);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 180ms cubic-bezier(.2,.9,.2,1), box-shadow 180ms;
+}
+
+/* Hero media container */
+.heroMedia {
+  background: linear-gradient(180deg, #fff8fb, #fffbfd);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 36px rgba(16,24,40,0.06);
+  width: 100%;
+  max-width: 740px;
+  overflow: visible;
+}
+
+/* Image styling */
+.heroMedia img,
+.heroMedia :global(img) {
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms;
+  will-change: transform, box-shadow;
+}
+
+/* Hover for gallery images */
+.heroMedia :global(img):hover,
+.heroMedia img:hover {
+  transform: scale(1.06);
+  box-shadow: 0 18px 40px rgba(16,24,40,0.12);
+  z-index: 5;
+}
+
+/* Logo container (circle) centered and adjusted */
+.logo-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #fff5f7, #fff0f3);
+  box-shadow: 0 8px 24px rgba(139,35,80,0.08);
+  padding: 10px;
+  margin-bottom: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translateY(6px); /* baja el logo visualmente 6px */
+}
+
+/* Ajustes internos del componente AcmeLogo cuando se usa en la tarjeta */
+.logo-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Forzar que el SVG/emblema se escale bien and text hierarchy */
+.logo-inner svg,
+.logo-inner .logo-icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+}
+
+.logo-inner .logo-text {
+  line-height: 1;
+  color: #8b2350; /* deep pastel magenta */
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+/* Small helper notes */
+.note {
+  color: #f0a6bf;
+  font-size: 0.8rem;
+}
+
+/* Fade-in animation for entrance */
+@keyframes subtle-fade-in-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fadeInUp {
+  animation: subtle-fade-in-up 560ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+/* Hover effects for buttons */
+.btnPink,
+.secondaryLink,
+.btnDashboard {
+  transition: transform 180ms cubic-bezier(.2,.9,.2,1), box-shadow 180ms;
+  will-change: transform, box-shadow;
+}
+.btnPink:hover,
+.secondaryLink:hover,
+.btnDashboard:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(139,35,80,0.12);
+}
+
+/* Responsive tweaks */
+@media (min-width: 768px) {
+  .shape { height: 520px; filter: blur(44px); }
+  .heroCard { padding: 1.5rem; }
+  .slogan { font-size: 1rem; }
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .logo-container { width: 88px; height: 88px; padding: 8px; transform: translateY(4px); }
+  .logo-inner svg, .logo-inner .logo-icon { width: 36px; height: 36px; flex: 0 0 36px; }
+  .logo-inner .logo-text { font-size: .95rem; }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .heroMedia :global(img),
+  .heroMedia img,
+  .btnPink,
+  .secondaryLink,
+  .btnDashboard {
+    transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
 }
