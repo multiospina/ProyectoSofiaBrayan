@@ -18,7 +18,6 @@ export default function Search({ placeholder }: { placeholder: string }) {
       params.delete('query');
     }
 
-    // ✅ ESTA LÍNEA DEBE IR DENTRO DE LA FUNCIÓN
     replace(`${pathname}?${params.toString()}`);
   }
 
@@ -41,4 +40,3 @@ export default function Search({ placeholder }: { placeholder: string }) {
     </div>
   );
 }
-ñ
