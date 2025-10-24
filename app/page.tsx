@@ -18,7 +18,7 @@ function GreetingRotator() {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % messages.length), 3500);
+    const t = setInterval(() => setIdx((i) => (i + 1) % messages.length), 2000);
     return () => clearInterval(t);
   }, []);
 

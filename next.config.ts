@@ -1,8 +1,9 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   experimental: {
-    cacheComponents: true, // ✅ reemplaza ppr: true
-  },
+    cacheComponents: true
+  }
 };
 
 export default nextConfig;

@@ -4,51 +4,81 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
-  // NOTE: Uncomment this code in Chapter 11
+  const pathname = usePathname() ?? '';
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
 
-  // const allPages = generatePagination(currentPage, totalPages);
+  const createPageURL = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams?.toString() ?? '');
+    params.set('page', pageNumber.toString());
+    return `${pathname}${params.toString() ? `?${params.toString()}` : ''}`;
+  };
+
+  const pages = generatePagination(totalPages, currentPage);
+
+  const prevPage = currentPage > 1 ? currentPage - 1 : 1;
+  const nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
+
+  if (totalPages <= 1) return null;
 
   return (
-    <>
-      {/*  NOTE: Uncomment this code in Chapter 11 */}
-
-      {/* <div className="inline-flex">
+    <nav className="flex items-center justify-center" aria-label="Pagination">
+      <div className="flex items-center">
         <PaginationArrow
+          href={createPageURL(prevPage)}
           direction="left"
-          href={createPageURL(currentPage - 1)}
-          isDisabled={currentPage <= 1}
+          isDisabled={currentPage === 1}
         />
 
-        <div className="flex -space-x-px">
-          {allPages.map((page, index) => {
-            let position: 'first' | 'last' | 'single' | 'middle' | undefined;
+        <div className="flex items-center rounded-md border">
+          {pages.map((p, idx) => {
+            const isEllipsis = typeof p === 'string' && p === '...';
+            const pageNumber = typeof p === 'number' ? p : p;
+            const position =
+              pages.length === 1
+                ? 'single'
+                : idx === 0
+                ? 'first'
+                : idx === pages.length - 1
+                ? 'last'
+                : 'middle';
 
-            if (index === 0) position = 'first';
-            if (index === allPages.length - 1) position = 'last';
-            if (allPages.length === 1) position = 'single';
-            if (page === '...') position = 'middle';
+            if (isEllipsis) {
+              return (
+                <div
+                  key={`ellipsis-${idx}`}
+                  className="flex h-10 w-10 items-center justify-center text-sm border text-gray-400"
+                >
+                  …
+                </div>
+              );
+            }
+
+            const href = createPageURL(pageNumber as number);
+            const isActive = Number(pageNumber) === currentPage;
 
             return (
               <PaginationNumber
-                key={`${page}-${index}`}
-                href={createPageURL(page)}
-                page={page}
-                position={position}
-                isActive={currentPage === page}
+                key={String(pageNumber) + idx}
+                page={pageNumber}
+                href={href}
+                isActive={isActive}
+                position={position as 'first' | 'last' | 'middle' | 'single'}
               />
             );
           })}
         </div>
 
         <PaginationArrow
+          href={createPageURL(nextPage)}
           direction="right"
-          href={createPageURL(currentPage + 1)}
-          isDisabled={currentPage >= totalPages}
+          isDisabled={currentPage === totalPages}
         />
-      </div> */}
-    </>
+      </div>
+    </nav>
   );
 }
 
